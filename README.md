@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Important Notice
 Please be aware that I'm struggling to maintain this plugin.  Even after considerable effort, I have been unable to produce a reliable development environment.
 
@@ -62,3 +63,6 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.   
 See the License for the specific language governing permissions and   
 limitations under the License.
+=======
+# plugin-background-service
+>>>>>>> c030c0b940710b5bfa8b3804eea1e7c4050a01da
