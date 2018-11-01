@@ -1,6 +1,7 @@
 package io.ionic.starter;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import org.json.JSONException;
@@ -14,7 +15,9 @@ public class MyService extends BackgroundService {
 
 	private final static String TAG = MyService.class.getSimpleName();
 
-	private String mHelloTo = "World";
+  public static String mHelloTo = "";
+
+//  public static List<String> listNtf = new ArrayList<String>();
 
 	@Override
 	protected JSONObject doWork() {
@@ -24,7 +27,7 @@ public class MyService extends BackgroundService {
 			SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 			String now = df.format(new Date(System.currentTimeMillis()));
 
-			String msg = "Hello " + this.mHelloTo + " - its currently " + now;
+			String msg = "Hello " + mHelloTo + " - its currently " + now;
 			result.put("Message", msg);
 
 			Log.d(TAG, msg);
@@ -40,7 +43,7 @@ public class MyService extends BackgroundService {
 		JSONObject result = new JSONObject();
 
 		try {
-			result.put("HelloTo", this.mHelloTo);
+			result.put("HelloTo", mHelloTo);
 		} catch (JSONException e) {
 		}
 
@@ -51,7 +54,7 @@ public class MyService extends BackgroundService {
 	protected void setConfig(JSONObject config) {
 		try {
 			if (config.has("HelloTo"))
-				this.mHelloTo = config.getString("HelloTo");
+				mHelloTo = config.getString("HelloTo");
 		} catch (JSONException e) {
 		}
 

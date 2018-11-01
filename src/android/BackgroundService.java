@@ -21,61 +21,63 @@ import android.util.Log;
 import com.red_folder.phonegap.plugin.backgroundservice.BackgroundServiceApi;
 
 public abstract class BackgroundService extends Service {
-	
+
 	/*
 	 ************************************************************************************************
-	 * Static values 
+	 * Static values
 	 ************************************************************************************************
 	 */
 	private static final String TAG = BackgroundService.class.getSimpleName();
 
 	/*
 	 ************************************************************************************************
-	 * Fields 
+	 * Fields
 	 ************************************************************************************************
 	 */
 	private Boolean mServiceInitialised = false;
 	private Timer mTimer;
-	
+
+  public static String test;
+
 	private final Object mResultLock = new Object();
 	private JSONObject mLatestResult = null;
 
 	private List<BackgroundServiceListener> mListeners = new ArrayList<BackgroundServiceListener>();
-	
+
 	private TimerTask mUpdateTask;
-	
+
 	private Date mPausedUntil = null;
 
 	public void setPauseDuration(long pauseDuration) {
 		this.mPausedUntil = new Date(new Date().getTime() + pauseDuration);
-		
+
 		// Call the onPause event
 		onPause();
 	}
-	
+
 	public Boolean getEnabled() {
-		SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);  
+		SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
 
 		return sharedPrefs.getBoolean(this.getClass().getName() + ".Enabled", false);
 	}
 
 	public void setEnabled(Boolean enabled) {
-		SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);  
+		SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
 
 		SharedPreferences.Editor editor = sharedPrefs.edit();
         editor.putBoolean(this.getClass().getName() + ".Enabled", enabled);
         editor.commit(); // Very important
 	}
-	
+
 	public int getMilliseconds() {
-		SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);  
+		SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
 
 		// Should default to a minute
-		return sharedPrefs.getInt(this.getClass().getName() + ".Milliseconds", 60000 );	
+		return sharedPrefs.getInt(this.getClass().getName() + ".Milliseconds", 60000 );
 	}
 
 	public void setMilliseconds(int milliseconds) {
-		SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);  
+		SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
 
 		SharedPreferences.Editor editor = sharedPrefs.edit();
         editor.putInt(this.getClass().getName() + ".Milliseconds", milliseconds);
@@ -87,7 +89,7 @@ public abstract class BackgroundService extends Service {
 			return mLatestResult;
 		}
 	}
-	
+
 	protected void setLatestResult(JSONObject value) {
 		synchronized (mResultLock) {
 			this.mLatestResult = value;
@@ -95,49 +97,49 @@ public abstract class BackgroundService extends Service {
 	}
 
 	public void restartTimer() {
-        
+
         // Stop the timertask and restart for the new interval to take effect
         if (this.mUpdateTask != null) {
         	this.mUpdateTask.cancel();
         	this.mUpdateTask = null;
 
-			this.mUpdateTask = getTimerTask(); 			
+			this.mUpdateTask = getTimerTask();
 			this.mTimer.schedule(this.mUpdateTask, getMilliseconds(), getMilliseconds());
         }
 	}
-	
+
 	/*
 	 ************************************************************************************************
-	 * Overriden Methods 
+	 * Overriden Methods
 	 ************************************************************************************************
 	 */
 
-	@Override  
+	@Override
 	public IBinder onBind(Intent intent) {
 		Log.i(TAG, "onBind called");
 		return apiEndpoint;
-	}     
-	
+	}
+
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 	    super.onStartCommand(intent, flags, startId);
 	    Log.d(TAG, "onStartCommand run");
 
 	    initialiseService();
-	    return START_STICKY;  
+	    return START_STICKY;
 	}
 
-	@Override  
-	public void onDestroy() {     
-		super.onDestroy();     
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
 		Log.i(TAG, "Service destroying");
-		
+
 		cleanupService();
 	}
-	
+
 	/*
 	 ************************************************************************************************
-	 * Protected methods 
+	 * Protected methods
 	 ************************************************************************************************
 	 */
 	protected void runOnce() {
@@ -148,14 +150,14 @@ public abstract class BackgroundService extends Service {
 
 	/*
 	 ************************************************************************************************
-	 * Private methods 
+	 * Private methods
 	 ************************************************************************************************
 	 */
 	private BackgroundServiceApi.Stub apiEndpoint = new BackgroundServiceApi.Stub() {
 
 		/*
 		 ************************************************************************************************
-		 * Overriden Methods 
+		 * Overriden Methods
 		 ************************************************************************************************
 		 */
 		@Override
@@ -194,10 +196,10 @@ public abstract class BackgroundService extends Service {
 							removed = true;
 						}
 					}
-					
+
 					if (removed)
 						Log.d(TAG, "Listener removed");
-					else 
+					else
 						Log.d(TAG, "Listener not found");
 				}
 			}
@@ -207,11 +209,11 @@ public abstract class BackgroundService extends Service {
 		public void enableTimer(int milliseconds) throws RemoteException {
 			// First stop it just to be on the safe side
 			stopTimerTask();
-			
+
 			// Then enable and set the milliseconds
 			setEnabled(true);
 			setMilliseconds(milliseconds);
-			
+
 			// Finally setup the TimerTask
 			setupTimerTask();
 		}
@@ -220,7 +222,7 @@ public abstract class BackgroundService extends Service {
 		public void disableTimer() throws RemoteException {
 			// Set to disabled
 			setEnabled(false);
-			
+
 			// Stop the timer task
 			stopTimerTask();
 		}
@@ -235,19 +237,20 @@ public abstract class BackgroundService extends Service {
 			JSONObject array = getConfig();
 			if (array == null)
 				return "";
-			else 
+			else
 				return array.toString();
 		}
 
 		@Override
 		public void setConfiguration(String configuration) throws RemoteException {
 			try {
-				JSONObject array = null;
-				if (configuration.length() > 0) {
+        JSONObject array = null;
+        if (test != null) array = new JSONObject(test);
+				 if (configuration.length() > 0) {
 					array = new JSONObject(configuration);
 				} else {
 					array = new JSONObject();
-				}	
+				}
 				setConfig(array);
 			} catch (Exception ex) {
 				throw new RemoteException();
@@ -266,7 +269,7 @@ public abstract class BackgroundService extends Service {
 	};
 
 	private void initialiseService() {
-		
+
 		if (!this.mServiceInitialised) {
 			Log.i(TAG, "Initialising the service");
 
@@ -275,18 +278,18 @@ public abstract class BackgroundService extends Service {
 
 			Log.i(TAG, "Syncing result");
 			this.setLatestResult(tmp);
-		
+
 			if (getEnabled())
 				this.setupTimerTask();
-			
+
 			this.mServiceInitialised = true;
 		}
 
 	}
-	
+
 	private void cleanupService() {
 		Log.i(TAG, "Running cleanupService");
-		
+
 		Log.i(TAG, "Stopping timer task");
 		stopTimerTask();
 
@@ -294,7 +297,7 @@ public abstract class BackgroundService extends Service {
 		if (this.mTimer != null) {
 			Log.i(TAG, "Timer is not null");
 			try {
-				this.mTimer.cancel();     
+				this.mTimer.cancel();
 				Log.i(TAG, "Timer.cancel has been called");
 				this.mTimer = null;
 			} catch (Exception ex) {
@@ -309,19 +312,19 @@ public abstract class BackgroundService extends Service {
 		if (this.mTimer == null) {
 			this.mTimer = new Timer(this.getClass().getName());
 		}
-		
+
 		// Only create the updateTask if is null
 		if (this.mUpdateTask == null) {
-			this.mUpdateTask = getTimerTask(); 			
+			this.mUpdateTask = getTimerTask();
 			int milliseconds = getMilliseconds();
 			this.mTimer.schedule(this.mUpdateTask, 1000L, milliseconds);
 		}
 
 		onTimerEnabled();
 	}
-	
+
 	private void stopTimerTask() {
-		
+
 		Log.i(TAG, "stopTimerTask called");
 		if (this.mUpdateTask != null)
 		{
@@ -334,15 +337,15 @@ public abstract class BackgroundService extends Service {
 			}
 			this.mUpdateTask = null;
 		}
-		
+
 		onTimerDisabled();
 	}
-	
+
 	private TimerTask getTimerTask() {
 		return new TimerTask() {
 
-			@Override    
-			public void run() {       
+			@Override
+			public void run() {
 				Log.i(TAG, "Timer task starting work");
 
 				Log.d(TAG, "Is the service paused?");
@@ -365,22 +368,22 @@ public abstract class BackgroundService extends Service {
 					Log.d(TAG, "Service is paused");
 				} else {
 					Log.d(TAG, "Service is not paused");
-					
-					// Runs the doWork 
+
+					// Runs the doWork
 					// Sets the last result & updates the listeners
 					doWorkWrapper();
 				}
 
 				Log.i(TAG, "Timer task completing work");
-			}   
+			}
 		};
 
 	}
-	
+
 	// Seperated out to allow the doWork to be called from timer and adhoc (via run method)
 	private void doWorkWrapper() {
 		JSONObject tmp = null;
-		
+
 		try {
 			tmp = doWork();
 		} catch (Exception ex) {
@@ -389,7 +392,7 @@ public abstract class BackgroundService extends Service {
 
 		Log.i(TAG, "Syncing result");
 		setLatestResult(tmp);
-		
+
 		// Now call the listeners
 		Log.i(TAG, "Sending to all listeners");
 		for (int i = 0; i < mListeners.size(); i++)
@@ -401,31 +404,31 @@ public abstract class BackgroundService extends Service {
 				Log.i(TAG, "Failed to send to listener - " + i + " - " + e.getMessage());
 			}
 		}
-		
+
 	}
-	
+
 	/*
 	 ************************************************************************************************
-	 * Methods for subclasses to override 
+	 * Methods for subclasses to override
 	 ************************************************************************************************
 	 */
-	protected abstract JSONObject initialiseLatestResult(); 
+	protected abstract JSONObject initialiseLatestResult();
 	protected abstract JSONObject doWork();
 	protected abstract JSONObject getConfig();
 	protected abstract void setConfig(JSONObject config);
-	
+
 	protected void onTimerEnabled() {
 	}
 
 	protected void onTimerDisabled() {
 	}
-	
+
 	protected void onPause() {
 	}
-	
+
 	protected void onPauseComplete() {
 	}
-	
+
 	protected void onCleanup() {
 	}
 }

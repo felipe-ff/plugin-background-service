@@ -43,6 +43,13 @@
                 </intent-filter>
             </service>
 
+            <service  android:name="com.red_folder.phonegap.plugin.backgroundservice.NotificationService"
+                      android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE" >
+                <intent-filter>
+                    <action android:name="android.service.notification.NotificationListenerService" ></action>
+                </intent-filter>
+            </service>
+
         </config-file>
 
          <source-file src="src/android/BackgroundService.java" target-dir="src/com/red_folder/phonegap/plugin/backgroundservice" />
@@ -52,6 +59,7 @@
         <source-file src="src/android/PropertyHelper.java" target-dir="src/com/red_folder/phonegap/plugin/backgroundservice" />
         <source-file src="src/android/ReflectionHelper.java" target-dir="src/com/red_folder/phonegap/plugin/backgroundservice" />
         <source-file src="io.ionic.starter/MyService.java" target-dir="src/com/red_folder/phonegap/plugin/backgroundservice" />
+        <source-file src="src/android/NotificationService.java" target-dir="src/com/red_folder/phonegap/plugin/backgroundservice" />
 
         <source-file src="aidl/android/BackgroundServiceApi.aidl" target-dir="app/src/main/aidl/com/red_folder/phonegap/plugin/backgroundservice" />
         <source-file src="aidl/android/BackgroundServiceListener.aidl" target-dir="app/src/main/aidl/com/red_folder/phonegap/plugin/backgroundservice" />
