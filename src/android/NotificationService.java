@@ -57,6 +57,7 @@ public class NotificationService extends NotificationListenerService {
             String text = getExtra(extras, "android.text");
             //String s = "var config = {}";
             //BackgroundService.test = s;
+            //if (title.includes('28824') || title.includes('NUBANK') || title.includes('CARTÕES')) {
             if (text.contains("Compra") || text.contains("compra")) {
               MyService.mHelloTo += title + " - " + text;
               //NotificationCommands.notifyListener(sbn);
@@ -79,21 +80,21 @@ public class NotificationService extends NotificationListenerService {
     }
 
     public static void removeAll(){
-        try {
-            for (StatusBarNotification n : notifications) remove(n);
-            notifications.clear();
-        } catch (Exception e){
-            Log.e(TAG, "Unable to remove notifications",e);
-        }
+      try {
+         for (StatusBarNotification n : notifications) remove(n);
+         notifications.clear();
+      } catch (Exception e){
+         Log.e(TAG, "Unable to remove notifications",e);
+      }
     }
     private static void remove(StatusBarNotification n){
-        String ns = Context.NOTIFICATION_SERVICE;
-        NotificationManager nMgr = (NotificationManager) context.getApplicationContext().getSystemService(ns);
+      String ns = Context.NOTIFICATION_SERVICE;
+      NotificationManager nMgr = (NotificationManager) context.getApplicationContext().getSystemService(ns);
 
-        int id = n.getId();
-        String tag = n.getTag();
-        Log.i("Cancelling notification ", tag + ", " + id);
-        nMgr.cancel(tag, id);
+      int id = n.getId();
+      String tag = n.getTag();
+      Log.i("Cancelling notification ", tag + ", " + id);
+      nMgr.cancel(tag, id);
     }
 
     private static String getExtraLines(Bundle extras, String extra){
