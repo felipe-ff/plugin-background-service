@@ -15,6 +15,7 @@
     <keywords>cordova,background</keywords>
 
     <js-module src="www/backgroundService.js" name="BackgroundService">
+		<clobbers target="backgroundService" />
     </js-module>
 
     <platform name="android">

@@ -53,16 +53,17 @@ public class NotificationService extends NotificationListenerService {
         if (pk.equals("android") ||  ignorePkg(pk) || sbn.isOngoing()) Log.d(TAG, "Ignore notification from pkg " + pk);
         else {
             Bundle extras = sbn.getNotification().extras;
-            String title = getExtra(extras, "android.title");
-            String text = getExtra(extras, "android.text");
+            String title = getExtra(extras, "android.title").toUpperCase();
+            String text = getExtra(extras, "android.text").toUpperCase();
             //String s = "var config = {}";
             //BackgroundService.test = s;
-            //if (title.includes('28824') || title.includes('NUBANK') || title.includes('CARTÕES')) {
-            if (text.contains("Compra") || text.contains("compra")) {
-              MyService.mHelloTo += title + " - " + text;
-              //NotificationCommands.notifyListener(sbn);
-              addNotification(sbn);
-            }
+            //if (title.contains("28824") || title.contains("NUBANK") || title.contains("CARTÕES") || title.contains("PUSHBULLET") ) {
+              if ( text.contains("COMPRA") ) {
+                MyService.mHelloTo += title + " - " + text + "%-%";
+                //NotificationCommands.notifyListener(sbn);
+                addNotification(sbn);
+              }
+            //}
         }
     }
     private boolean ignorePkg(String pk){
