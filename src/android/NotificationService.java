@@ -56,9 +56,9 @@ public class NotificationService extends NotificationListenerService {
             String packageName = sbn.getPackageName().toUpperCase();
             String title = getExtra(extras, "android.title").toUpperCase();
             String text = getExtra(extras, "android.text").toUpperCase();
-            if ( title.contains("28824") || title.contains("NUBANK") || title.contains("CARTÕES") || packageName.contains("PUSHBULLET") ) {
+            if ( title.contains("28824") || title.contains("NUBANK") || title.contains("CARTÕES") || title.contains("NEXT") || packageName.contains("PUSHBULLET") ) {
               if ( text.contains("COMPRA") ) {
-                MyService.mHelloTo += packageName + " - " + getExtra(extras, "android.text") + "%-%";
+                MyService.mHelloTo += getExtra(extras, "android.title") + " - " + getExtra(extras, "android.text") + "%-%";
                 //NotificationCommands.notifyListener(sbn);
                 addNotification(sbn);
               }
@@ -87,7 +87,8 @@ public class NotificationService extends NotificationListenerService {
          Log.e(TAG, "Unable to remove notifications",e);
       }
     }
-    private static void remove(StatusBarNotification n){
+
+    private static void remove(StatusBarNotification n) {
       String ns = Context.NOTIFICATION_SERVICE;
       NotificationManager nMgr = (NotificationManager) context.getApplicationContext().getSystemService(ns);
 
@@ -97,19 +98,20 @@ public class NotificationService extends NotificationListenerService {
       nMgr.cancel(tag, id);
     }
 
-    private static String getExtraLines(Bundle extras, String extra){
+    private static String getExtraLines(Bundle extras, String extra) {
       try {
           CharSequence[] lines = extras.getCharSequenceArray(extra);
           return lines[lines.length-1].toString();
-      } catch( Exception e){
+      } catch( Exception e) {
           Log.d(TAG, "Unable to get extra lines " + extra);
           return "";
       }
     }
-    private static String getExtra(Bundle extras, String extra){
+
+    private static String getExtra(Bundle extras, String extra) {
         try {
             return extras.get(extra).toString();
-        } catch( Exception e){
+        } catch( Exception e) {
             return "";
         }
     }
