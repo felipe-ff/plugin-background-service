@@ -16,6 +16,9 @@ import io.ionic.starter.MyService;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class NotificationService extends NotificationListenerService {
     //http://developer.android.com/reference/android/service/notification/NotificationListenerService.html
 
@@ -58,7 +61,10 @@ public class NotificationService extends NotificationListenerService {
             String text = getExtra(extras, "android.text").toUpperCase();
             if ( title.contains("28824") || title.contains("NUBANK") || title.contains("CARTÕES") || title.contains("NEXT") || packageName.contains("PUSHBULLET") ) {
               if ( text.contains("COMPRA") ) {
-                MyService.mHelloTo += getExtra(extras, "android.title") + " - " + getExtra(extras, "android.text") + "%-%";
+                SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                String now = df.format(new Date(System.currentTimeMillis()));
+
+                MyService.mHelloTo += getExtra(extras, "android.title") + " - " + getExtra(extras, "android.text") + " - " + now + "%-%";
                 //NotificationCommands.notifyListener(sbn);
                 addNotification(sbn);
               }
