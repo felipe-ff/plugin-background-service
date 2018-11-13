@@ -1,5 +1,5 @@
 {
-  "_from": "git+https://github.com/icecoolinux/bgs-core.git",
+  "_from": "git+https://github.com/felipe-ff/plugin-background-service.git",
   "_id": "com.red_folder.phonegap.plugin.backgroundservice@2.0.0",
   "_inBundle": false,
   "_integrity": "",
@@ -7,18 +7,18 @@
   "_phantomChildren": {},
   "_requested": {
     "type": "git",
-    "raw": "https://github.com/icecoolinux/bgs-core.git",
-    "rawSpec": "https://github.com/icecoolinux/bgs-core.git",
-    "saveSpec": "git+https://github.com/icecoolinux/bgs-core.git",
-    "fetchSpec": "https://github.com/icecoolinux/bgs-core.git",
+    "raw": "https://github.com/felipe-ff/plugin-background-service.git",
+    "rawSpec": "https://github.com/felipe-ff/plugin-background-service.git",
+    "saveSpec": "git+https://github.com/felipe-ff/plugin-background-service.git",
+    "fetchSpec": "https://github.com/felipe-ff/plugin-background-service.git",
     "gitCommittish": null
   },
   "_requiredBy": [
     "#USER",
     "/"
   ],
-  "_resolved": "git+https://github.com/icecoolinux/bgs-core.git#77fd162ccdf3da9a181e0087863a3361de880e53",
-  "_spec": "https://github.com/icecoolinux/bgs-core.git",
+  "_resolved": "git+https://github.com/felipe-ff/plugin-background-service.git#e497eaeef9c81500c633f5da3b047719b44ce71a",
+  "_spec": "https://github.com/felipe-ff/plugin-background-service.git",
   "_where": "C:\\ProjetosInatel\\ionic4-angular6",
   "author": {
     "name": "Red-Folder"

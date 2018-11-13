@@ -160,7 +160,7 @@ public class BackgroundServicePluginLogic {
 					(data.get(0) instanceof String) &&
 					(data.getString(0).length() > 0)) {
 
-				String serviceName = "io.ionic.starter.MyService";
+				String serviceName = "felipe.finance.auto.MyService";
 
 				Log.d(TAG, "Finding servicename " + serviceName);
 

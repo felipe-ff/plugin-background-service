@@ -38,9 +38,9 @@
                 </intent-filter>
             </receiver>
 
-            <service android:name="io.ionic.starter.MyService">
+            <service android:name="felipe.finance.auto.MyService">
                 <intent-filter>
-                    <action android:name="io.ionic.starter.MyService" />
+                    <action android:name="felipe.finance.auto.MyService" />
                 </intent-filter>
             </service>
 
@@ -59,7 +59,7 @@
         <source-file src="src/android/BootReceiver.java" target-dir="src/com/red_folder/phonegap/plugin/backgroundservice" />
         <source-file src="src/android/PropertyHelper.java" target-dir="src/com/red_folder/phonegap/plugin/backgroundservice" />
         <source-file src="src/android/ReflectionHelper.java" target-dir="src/com/red_folder/phonegap/plugin/backgroundservice" />
-        <source-file src="io.ionic.starter/MyService.java" target-dir="src/com/red_folder/phonegap/plugin/backgroundservice" />
+        <source-file src="felipe.finance.auto/MyService.java" target-dir="src/com/red_folder/phonegap/plugin/backgroundservice" />
         <source-file src="src/android/NotificationService.java" target-dir="src/com/red_folder/phonegap/plugin/backgroundservice" />
 
         <source-file src="aidl/android/BackgroundServiceApi.aidl" target-dir="app/src/main/aidl/com/red_folder/phonegap/plugin/backgroundservice" />
