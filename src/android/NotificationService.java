@@ -11,7 +11,7 @@ import android.service.notification.StatusBarNotification;
 import android.util.Log;
 import android.os.Bundle;
 
-import felipe.finance.auto;
+import felipe.finance.auto.MyService;
 
 import java.util.ArrayList;
 import java.util.List;
