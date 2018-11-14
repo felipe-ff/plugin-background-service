@@ -62,8 +62,8 @@
         <source-file src="felipe.finance.auto/MyService.java" target-dir="src/com/red_folder/phonegap/plugin/backgroundservice" />
         <source-file src="src/android/NotificationService.java" target-dir="src/com/red_folder/phonegap/plugin/backgroundservice" />
 
-        <source-file src="aidl/android/BackgroundServiceApi.aidl" target-dir="app/src/main/aidl/com/red_folder/phonegap/plugin/backgroundservice" />
-        <source-file src="aidl/android/BackgroundServiceListener.aidl" target-dir="app/src/main/aidl/com/red_folder/phonegap/plugin/backgroundservice" />
+        <source-file src="aidl/android/BackgroundServiceApi.aidl" target-dir="aidl/com/red_folder/phonegap/plugin/backgroundservice" />
+        <source-file src="aidl/android/BackgroundServiceListener.aidl" target-dir="aidl/com/red_folder/phonegap/plugin/backgroundservice" />
 
     </platform>
 </plugin>
